@@ -20,13 +20,18 @@ module.exports = (app) => {
             )) 
             .catch(erro => console.log(erro));
 
-       /* db.all('SELECT * FROM livros', (erro, resultados) => {
-        res.marko(
-            require('../views/livros/lista/lista.marko'),
-           {
-               livros: resultados
-           }
-        )
-    } */
-})
+}),
+
+app.get('/livros/form', (req, res) => {
+    res.marko(require('../views/livros/form/form.marko'))
+   }),
+
+   app.post('/livros', (req, res) => {
+    console.log(req.body);
+    const livroDao = new LivroDao(db)
+    livroDao.adiciona(req.body)
+        .then(res.redirect('/livros')) 
+        .catch(erro => console.log(erro));
+
+   })
 }
